@@ -123,10 +123,7 @@
       if (!out || out.length < 2) throw new Error("empty");
       // Drop anything after a sponsor or ad marker some free endpoints append.
       out = out.split(/\n\s*(?:---|\*\*sponsor|sponsor:|ad:)/i)[0].trim();
-      return out.replace(/\*\*|__|^#+\s*|^\s*[-*]\s+|\|/gm, "").replace(/
-{3,}/g, "
-
-").trim();
+      return out.replace(/\*\*|__|^#+\s*|^\s*[-*]\s+|\|/gm, "").trim();
     });
   }
 
