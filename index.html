@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yardstick | Underwrite a rental in two minutes</title>
+  <meta name="description" content="Yardstick is an AI underwriting tool for small real estate investors. Paste a listing and get cap rate, cash flow and a clear verdict in minutes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Young+Serif&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html" aria-label="Yardstick home">
+        <svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="M5 16 17 6l12 10v13H5z" stroke="#B8893A" stroke-width="2.4" stroke-linejoin="round"/><path d="M9 29v-4M13 29v-6M17 29v-4M21 29v-6M25 29v-4" stroke="#FBFCFA" stroke-width="2"/></svg>
+        Yardstick
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#analyzer">Deal Analyzer</a>
+        <a href="about.html">How it works</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Introduction" style="padding:0">
+      <video id="hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+        <source src="hero.mp4" type="video/mp4" />
+      </video>
+      <div class="wrap hero-content">
+        <h1>Know if a rental pays before you make an offer.</h1>
+        <p class="lede">Yardstick is an AI underwriting tool for small real estate investors. Paste a listing and get rent comps, cash flow, cap rate and a clear verdict in about two minutes, not two hours in a spreadsheet.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="about.html">See how Yardstick works</a>
+          <a class="btn btn-ghost" href="#analyzer">Try the deal analyzer</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="strip" aria-label="Why Yardstick">
+      <div class="wrap strip-grid">
+        <div><strong>Paste a link</strong><p>Drop in a listing URL or an address. Yardstick reads the property details for you.</p></div>
+        <div><strong>Real rent, real costs</strong><p>Market rent from nearby comparables, plus local taxes, insurance, vacancy and repairs.</p></div>
+        <div><strong>A straight answer</strong><p>A plain English verdict measured against the return you actually want.</p></div>
+      </div>
+    </section>
+
+    <section id="analyzer" aria-labelledby="analyzer-title">
+      <div class="wrap">
+        <h2 id="analyzer-title">Measure a deal right now</h2>
+        <p class="section-intro">This is a working slice of Yardstick. Change any number and the verdict updates instantly. The marker shows where your cash on cash return lands against your target.</p>
+
+        <div class="analyzer">
+          <form id="deal-form" novalidate>
+            <div class="field full"><label for="price">Purchase price</label><div class="input"><span>$</span><input id="price" type="number" inputmode="decimal" value="250000" min="0" step="1000" /></div></div>
+            <div class="field"><label for="downPct">Down payment</label><div class="input"><input id="downPct" type="number" inputmode="decimal" value="25" min="0" max="100" step="1" style="padding-left:12px" /><span>%</span></div></div>
+            <div class="field"><label for="ratePct">Interest rate</label><div class="input"><input id="ratePct" type="number" inputmode="decimal" value="7" min="0" max="25" step="0.125" style="padding-left:12px" /><span>%</span></div></div>
+            <div class="field"><label for="rent">Monthly rent</label><div class="input"><span>$</span><input id="rent" type="number" inputmode="decimal" value="2300" min="0" step="25" /></div></div>
+            <div class="field"><label for="expenses">Monthly expenses</label><div class="input"><span>$</span><input id="expenses" type="number" inputmode="decimal" value="650" min="0" step="25" /></div></div>
+            <div class="field"><label for="vacancyPct">Vacancy</label><div class="input"><input id="vacancyPct" type="number" inputmode="decimal" value="6" min="0" max="100" step="1" style="padding-left:12px" /><span>%</span></div></div>
+            <div class="field"><label for="targetPct">Your target return</label><div class="input"><input id="targetPct" type="number" inputmode="decimal" value="8" min="0" max="30" step="0.5" style="padding-left:12px" /><span>%</span></div></div>
+            <p class="assume">Assumes a 30 year fixed loan and closing costs of 3% of the price. Expenses include taxes, insurance, repairs and management.</p>
+          </form>
+
+          <div class="results" id="results" aria-live="polite">
+            <div>
+              <p class="verdict" id="verdict">Calculating...</p>
+              <p class="verdict-sub" id="verdict-sub"></p>
+            </div>
+            <div class="metrics">
+              <div class="metric"><div class="val" id="m-cf">$0</div><div class="lbl">Monthly cash flow</div></div>
+              <div class="metric"><div class="val" id="m-cap">0%</div><div class="lbl">Cap rate</div></div>
+              <div class="metric"><div class="val" id="m-coc">0%</div><div class="lbl">Cash on cash return</div></div>
+            </div>
+            <div class="metrics">
+              <div class="metric"><div class="val" id="m-mort">$0</div><div class="lbl">Mortgage payment</div></div>
+              <div class="metric"><div class="val" id="m-cash">$0</div><div class="lbl">Cash needed</div></div>
+              <div class="metric"><div class="val" id="m-dscr">0</div><div class="lbl">DSCR</div></div>
+            </div>
+            <div class="gauge">
+              <div class="gauge-title">Cash on cash return, from -5% to 15%</div>
+              <div class="ruler" role="img" id="ruler" aria-label="Cash on cash return gauge">
+                <div class="target" id="target-line"></div>
+                <div class="marker" id="marker"></div>
+              </div>
+              <div class="ruler-scale"><span>-5%</span><span>0%</span><span>5%</span><span>10%</span><span>15%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:40px">
+          <a class="btn btn-dark" href="about.html">Learn more about Yardstick</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="xfactor" aria-labelledby="xf-title">
+      <div class="wrap">
+        <p><strong id="xf-title">X-Factor: Live Deal Analyzer.</strong> Enter a price, rent and expenses to instantly see cap rate, cash flow and cash on cash return, with a verdict and a yardstick gauge showing if the deal clears your target. It turns the site from a brochure into a working sample of the product.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Yardstick, a Gen AI class concept project. Video generated with Google Gemini.</span>
+      <a href="about.html">How it works</a>
+    </div>
+  </footer>
+
+  <script src="math.js"></script>
+  <script>
+    // Make sure the hero video starts and keeps looping on every browser.
+    (function () {
+      var v = document.getElementById("hero-video");
+      v.muted = true;
+      var play = function () { var p = v.play(); if (p && p.catch) p.catch(function () {}); };
+      play();
+      v.addEventListener("ended", function () { v.currentTime = 0; play(); });
+      document.addEventListener("visibilitychange", function () { if (!document.hidden) play(); });
+      ["click", "touchstart", "scroll"].forEach(function (e) { window.addEventListener(e, play, { once: true, passive: true }); });
+    })();
+
+    // Deal Analyzer
+    (function () {
+      var ids = ["price", "downPct", "ratePct", "rent", "expenses", "vacancyPct", "targetPct"];
+      var el = function (id) { return document.getElementById(id); };
+      var money = function (n) { var s = Math.round(Math.abs(n)).toLocaleString("en-US"); return (n < 0 ? "-$" : "$") + s; };
+      var pos = function (pct) { return Math.max(0, Math.min(100, (pct + 5) / 20 * 100)); };
+      function val(id) { var v = parseFloat(el(id).value); return isFinite(v) && v >= 0 ? v : 0; }
+
+      function update() {
+        var d = { price: val("price"), downPct: Math.min(val("downPct"), 100), ratePct: val("ratePct"), rent: val("rent"), expenses: val("expenses"), vacancyPct: Math.min(val("vacancyPct"), 100) };
+        var target = val("targetPct");
+        var r = window.YardstickMath.run(d);
+        el("m-cf").textContent = money(r.monthlyCF);
+        el("m-cap").textContent = r.capRate.toFixed(1) + "%";
+        el("m-coc").textContent = r.coc.toFixed(1) + "%";
+        el("m-mort").textContent = money(r.mortgage);
+        el("m-cash").textContent = money(r.cashIn);
+        el("m-dscr").textContent = isFinite(r.dscr) ? r.dscr.toFixed(2) : "No loan";
+        el("marker").style.left = pos(r.coc) + "%";
+        el("target-line").style.left = pos(target) + "%";
+        el("ruler").setAttribute("aria-label", "Cash on cash return " + r.coc.toFixed(1) + "% against a target of " + target + "%");
+
+        var box = el("results"), verdict, sub;
+        box.classList.remove("good", "warn", "bad");
+        if (d.price <= 0 || d.rent <= 0) {
+          verdict = "Enter a price and rent to measure the deal."; sub = "";
+        } else if (r.coc >= target) {
+          box.classList.add("good");
+          verdict = "This deal measures up.";
+          sub = "It clears your " + target + "% target by " + (r.coc - target).toFixed(1) + " points and puts " + money(r.monthlyCF * 12) + " a year in your pocket.";
+        } else if (r.monthlyCF >= 0) {
+          box.classList.add("warn");
+          var rentNeeded = Math.ceil(((target / 100 * r.cashIn / 12) + r.mortgage + d.expenses) / (1 - d.vacancyPct / 100) / 25) * 25;
+          verdict = "It cash flows, but falls short.";
+          sub = "You need about " + money(rentNeeded) + " a month in rent to hit your " + target + "% target, or a lower price.";
+        } else {
+          box.classList.add("bad");
+          verdict = "This deal loses money.";
+          sub = "You would pay " + money(-r.monthlyCF) + " a month out of pocket. Negotiate the price or pass.";
+        }
+        el("verdict").textContent = verdict;
+        el("verdict-sub").textContent = sub;
+      }
+      ids.forEach(function (id) { el(id).addEventListener("input", update); });
+      el("deal-form").addEventListener("submit", function (e) { e.preventDefault(); });
+      update();
+    })();
+  </script>
+  <script src="chat.js"></script>
+</body>
+</html>
