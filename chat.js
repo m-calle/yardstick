@@ -14,7 +14,7 @@
     "and returns cap rate, monthly cash flow, cash on cash return, DSCR and a plain English verdict against the investor's own target. " +
     "It also saves deals to a pipeline and drafts offer notes. Plans: Starter is free (5 deals a month), Investor is $29 a month (unlimited deals, " +
     "rent comps, saved pipeline), Pro is $79 a month (team seats, portfolio tracking, lender ready PDF reports). It is a student project concept, so it is not live yet; " +
-    "visitors can try the live Deal Analyzer on the home page. Keep every answer under 90 words, friendly and practical. You can explain real estate investing terms. " +
+    "visitors can try the live Deal Analyzer on the home page. Keep every answer under 90 words, friendly and practical. Reply in plain sentences only, with no markdown, tables, headings, bullets or asterisks. You can explain real estate investing terms. " +
     "Never give personalized legal, tax or financial advice; suggest a professional for that.";
 
   var KB = [
@@ -123,7 +123,10 @@
       if (!out || out.length < 2) throw new Error("empty");
       // Drop anything after a sponsor or ad marker some free endpoints append.
       out = out.split(/\n\s*(?:---|\*\*sponsor|sponsor:|ad:)/i)[0].trim();
-      return out;
+      return out.replace(/\*\*|__|^#+\s*|^\s*[-*]\s+|\|/gm, "").replace(/
+{3,}/g, "
+
+").trim();
     });
   }
 
